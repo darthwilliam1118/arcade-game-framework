@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import json
 import logging
-import sys
 from dataclasses import asdict, dataclass
 from datetime import date
 from pathlib import Path
 from typing import Optional
+
+from agf.paths import writable_root
 
 log = logging.getLogger(__name__)
 
@@ -17,11 +18,10 @@ def scores_path() -> Path:
     """Return the path to highscores.json.
 
     When running as a PyInstaller bundle, writes next to the exe so the file
-    persists between runs.  In development, writes to the project root.
+    persists between runs.  In development, writes to the project root
+    configured via ``agf.paths.set_project_root()``.
     """
-    if getattr(sys, "frozen", False):
-        return Path(sys.executable).parent / "highscores.json"
-    return Path(__file__).parent.parent / "highscores.json"
+    return writable_root() / "highscores.json"
 
 
 @dataclass

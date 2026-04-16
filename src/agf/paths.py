@@ -39,3 +39,21 @@ def resource_path(relative: str) -> str:
             "should call it from a conftest.py fixture."
         )
     return str(_project_root / relative)
+
+
+def writable_root() -> Path:
+    """Return the directory for game-writable files (high scores, config, saves).
+
+    In a frozen bundle this is the directory containing the exe so files
+    persist between runs.  In dev, it is the project root set via
+    ``set_project_root()``.  Callers should append their own filename.
+    """
+    if getattr(sys, "frozen", False):
+        return Path(sys.executable).parent
+    if _project_root is None:
+        raise RuntimeError(
+            "agf.paths.set_project_root() must be called before writable_root() "
+            "in dev mode.  Games should call it from their entry point; tests "
+            "should call it from a conftest.py fixture."
+        )
+    return _project_root
