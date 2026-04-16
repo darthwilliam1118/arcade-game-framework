@@ -1,18 +1,41 @@
-"""Resource path helper — works in both dev and PyInstaller bundles."""
+"""Resource path helper — works in both dev and PyInstaller bundles.
+
+Games must call ``set_project_root(Path)`` once at startup (before any
+resource is loaded) so that dev-mode path resolution locates the game's
+asset tree rather than the agf install location.  In a frozen bundle the
+hint is ignored; ``sys._MEIPASS`` is authoritative.
+"""
+
+from __future__ import annotations
 
 import os
 import sys
+from pathlib import Path
+from typing import Optional
+
+_project_root: Optional[Path] = None
+
+
+def set_project_root(path: Path) -> None:
+    """Record the game's project root for dev-mode resource resolution.
+
+    Call once at startup, before any resource is loaded.  Tests should
+    call this from a conftest.py fixture.  In a frozen bundle the value
+    is ignored.
+    """
+    global _project_root
+    _project_root = Path(path)
 
 
 def resource_path(relative: str) -> str:
-    """Return absolute path to *relative*, compatible with PyInstaller bundles.
-
-    In a frozen bundle sys._MEIPASS is the temp extraction directory.
-    In dev, fall back to the project root (two levels up from this file).
-    """
-    base: str = getattr(
-        sys,
-        "_MEIPASS",
-        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-    )
-    return os.path.join(base, relative)
+    """Return absolute path to *relative*, compatible with PyInstaller bundles."""
+    meipass = getattr(sys, "_MEIPASS", None)
+    if meipass is not None:
+        return os.path.join(meipass, relative)
+    if _project_root is None:
+        raise RuntimeError(
+            "agf.paths.set_project_root() must be called before resource_path() "
+            "in dev mode.  Games should call it from their entry point; tests "
+            "should call it from a conftest.py fixture."
+        )
+    return str(_project_root / relative)
