@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest tests/test_powerup_effect_categories.py tests/test_powerup_spawner.py tests/test_powerup_sprite.py tests/test_powerup_manager.py -v)",
+      "Bash(where python *)",
+      "Bash(py -3.11 -c \"import pytest, arcade; print\\(pytest.__version__, arcade.__version__\\)\")",
+      "Bash(py -3.12 -c \"import pytest, arcade; print\\(pytest.__version__, arcade.__version__\\)\")",
+      "Bash(py -3.13 -c \"import pytest, arcade; print\\(pytest.__version__, arcade.__version__\\)\")",
+      "Bash(py -0)",
+      "Bash(py -c \"import sys; print\\(sys.version\\); import pytest; print\\('pytest', pytest.__version__\\); import arcade; print\\('arcade', arcade.__version__\\)\")",
+      "Bash(env)",
+      "Read(//c/Users/darth/AppData/Local/Python/pythoncore-3.14-64/Lib/site-packages/**)",
+      "Bash(python -m black --version)",
+      "Bash(python -m ruff --version)",
+      "Bash(python -c ' *)"
+    ]
+  }
+}

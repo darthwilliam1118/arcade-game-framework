@@ -17,6 +17,8 @@ from agf.events import GameEvent
 if TYPE_CHECKING:
     import arcade
 
+    from agf.powerups.manager import PowerUpManager
+
 
 class BaseLevel(ABC):
     """Abstract interface for all level types."""
@@ -114,6 +116,21 @@ class BaseLevel(ABC):
     @abstractmethod
     def get_enemy_bullet_sprite_list(self) -> "arcade.SpriteList":
         """All active enemy projectiles for draw."""
+
+    # ------------------------------------------------------------------
+    # Power-ups — optional overrides
+    # ------------------------------------------------------------------
+
+    @abstractmethod
+    def get_powerup_manager(self) -> "PowerUpManager | None":
+        """Return the level's PowerUpManager, or None if this level
+        type has no power-ups. RunLevelView uses this for effect
+        category queries."""
+
+    def get_enemy_x_positions(self) -> list[float]:
+        """x positions of living enemies for spawn position selection.
+        Default returns empty list. Override in levels with enemy grids."""
+        return []
 
     # ------------------------------------------------------------------
     # Snapshot / restore
