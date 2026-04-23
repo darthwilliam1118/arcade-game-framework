@@ -45,16 +45,25 @@ class MusicPlayer:
         # All tracks are lazy-loaded: load_track() / play() on demand
 
     def load_track(self, key: str) -> None:
-        """Load *key* into _sounds if not already loaded (idempotent)."""
+        """Load *key* into _sounds if not already loaded (idempotent).
+
+        Silently skips if the audio file is missing so games that haven't
+        added their music assets yet don't crash.
+        """
         if key not in self._sounds:
-            self._sounds[key] = arcade.load_sound(resource_path(_TRACKS[key]))
+            try:
+                self._sounds[key] = arcade.load_sound(resource_path(_TRACKS[key]))
+            except (FileNotFoundError, KeyError):
+                pass
 
     def play(self, key: str) -> None:
-        """Start playing *key* looped.  No-op if *key* is already playing."""
+        """Start playing *key* looped.  No-op if *key* is already playing or missing."""
         if key == self._current_key:
             return
         self.stop()
         self.load_track(key)  # lazy fallback in case preload was skipped
+        if key not in self._sounds:
+            return  # file was missing; stay silent
         self._current_key = key
         self._player = arcade.play_sound(self._sounds[key], volume=self._volume, loop=True)
 
