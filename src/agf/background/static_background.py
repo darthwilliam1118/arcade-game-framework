@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 from typing import Optional
 
 import arcade
@@ -19,8 +20,17 @@ class StaticBackground:
         window_height: int,
         _sprite: Optional[arcade.Sprite] = None,
     ) -> None:
-        sprite = _sprite if _sprite is not None else arcade.Sprite(resource_path(texture_path))
-        if _sprite is None:
+        if _sprite is not None:
+            sprite = _sprite
+        else:
+            full_path = resource_path(texture_path)
+            if os.path.exists(full_path):
+                sprite = arcade.Sprite(full_path)
+            else:
+                sprite = arcade.Sprite()
+                sprite.texture = arcade.make_soft_square_texture(
+                    max(window_width, window_height), arcade.color.BLACK, 0, 255
+                )
             sprite.width = window_width
             sprite.height = window_height
             sprite.center_x = window_width / 2
