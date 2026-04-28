@@ -14,3 +14,4 @@ class GameEvent(Enum):
     LEVEL_COMPLETE = auto()
     ENEMY_DESTROYED = auto()
     POWERUP_COLLECTED = auto()
+    ENEMY_SHOT = auto()
