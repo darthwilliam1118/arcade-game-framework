@@ -42,6 +42,7 @@ class BaseLevel(ABC):
         delta_time: float,
         player_ship: Any,
         player_bullets: Optional[Any] = None,
+        frame_count: int = 0,
     ) -> list[GameEvent]:
         """Update all level entities.
 
@@ -178,6 +179,11 @@ class BaseLevel(ABC):
     # ------------------------------------------------------------------
     # Optional debug hook
     # ------------------------------------------------------------------
+
+    def get_last_timing(self) -> dict[str, float | None]:
+        """Return per-section timing from the most recent update() call.
+        Keys and values are implementation-defined. Returns {} by default."""
+        return {}
 
     def debug_force_dive(self, player_x: float) -> None:
         """Force a dive group for debug purposes (Shift+D).

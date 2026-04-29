@@ -86,6 +86,6 @@ class MusicPlayer:
     def stop(self) -> None:
         """Stop whatever is currently playing."""
         if self._player is not None:
-            self._player.pause()
+            arcade.stop_sound(self._player)
             self._player = None
         self._current_key = None
