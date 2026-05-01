@@ -111,12 +111,19 @@ class BaseLevel(ABC):
     # ------------------------------------------------------------------
 
     @abstractmethod
-    def get_all_enemy_sprites(self) -> "arcade.SpriteList":
-        """All active enemy sprites (grid + airborne) for draw and HP bars."""
+    def get_all_enemy_sprites(self) -> "list[arcade.Sprite]":
+        """All active enemy sprites (grid + airborne) for HP bar drawing.
+
+        Return a plain Python list, NOT an ``arcade.SpriteList``. Constructing
+        a SpriteList per call and appending shared sprites would register the
+        sprites with the temporary list (Sprite.sprite_lists), creating a
+        cycle that the cyclic GC cannot break while gameplay has gc.disable().
+        """
 
     @abstractmethod
-    def get_enemy_bullet_sprite_list(self) -> "arcade.SpriteList":
-        """All active enemy projectiles for draw."""
+    def get_enemy_bullet_sprite_list(self) -> "list[arcade.Sprite]":
+        """All active enemy projectiles. Return a plain list — see
+        get_all_enemy_sprites docstring for the cycle-leak rationale."""
 
     # ------------------------------------------------------------------
     # Power-ups — optional overrides
