@@ -25,12 +25,12 @@ class BaseGameConfig:
 
     starting_level: int = 1
     num_lives: int = 3
-    music_volume: int = 80  # 0-100
-    effects_volume: int = 80  # 0-100
+    music_volume: int = 10  # 0-100
+    effects_volume: int = 16  # 0-100
     debug: bool = False
     god_mode: bool = False
-    max_window_height: int = 1024  # height in px
-    sprite_scale: float = 1.0
+    max_window_height: int = 800  # height in px
+    sprite_scale: float = 0.5
 
 
 def config_path(project_root: Path, filename: str = "game_config.toml") -> Path:
