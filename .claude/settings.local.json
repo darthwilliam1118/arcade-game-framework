@@ -12,7 +12,15 @@
       "Read(//c/Users/darth/AppData/Local/Python/pythoncore-3.14-64/Lib/site-packages/**)",
       "Bash(python -m black --version)",
       "Bash(python -m ruff --version)",
-      "Bash(python -c ' *)"
+      "Bash(python -c ' *)",
+      "Bash(pytest tests/test_sound_manager.py -v)",
+      "Bash(pip show *)",
+      "Bash(pip install *)",
+      "Bash(pytest)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: add SoundManager for throttled sound playback *)",
+      "Bash(git tag *)",
+      "Bash(git push *)"
     ]
   }
 }
