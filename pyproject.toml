@@ -1,6 +1,6 @@
 [project]
 name = "arcade-game-framework"
-version = "0.1.0"
+version = "0.2.0"
 requires-python = ">=3.11"
 dependencies = [
     "arcade>=3.3.3,<4.0",
