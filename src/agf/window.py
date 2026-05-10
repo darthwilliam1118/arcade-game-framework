@@ -46,3 +46,30 @@ class GameWindowBase(arcade.Window):
 
     def _load_fonts(self) -> None:
         """Override to register any custom fonts.  No-op by default."""
+
+
+class ScrollingGameWindow(GameWindowBase):
+    """GameWindowBase subclass for games with a scrolling world.
+
+    Provides a world-space camera and a GUI/HUD camera.  The GUI camera
+    never moves.  The world camera is controlled by the game's
+    RunLevelView (or equivalent).
+    """
+
+    def __init__(
+        self,
+        cfg: BaseGameConfig,
+        background_cfg: BackgroundConfig,
+        title: str,
+    ) -> None:
+        super().__init__(cfg, background_cfg, title)
+        self.world_camera: arcade.Camera2D = arcade.Camera2D()
+        self.gui_camera: arcade.Camera2D = arcade.Camera2D()
+
+    def use_world_camera(self) -> None:
+        """Activate world camera.  Call before drawing world-space content."""
+        self.world_camera.use()
+
+    def use_gui_camera(self) -> None:
+        """Activate GUI camera.  Call before drawing HUD/screen-space content."""
+        self.gui_camera.use()
