@@ -1,6 +1,9 @@
 """Tests for SoundManager — no display or audio device required."""
+
 from __future__ import annotations
+
 from unittest.mock import MagicMock, patch
+
 from agf.sound_manager import SoundManager
 
 
