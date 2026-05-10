@@ -133,6 +133,15 @@ Add a `ScrollingGameWindow` subclass of `GameWindowBase` in
 `GameWindowBase` itself is unchanged. Base Attackers window inherits
 from `ScrollingGameWindow`. Space Attackers is unaffected.
 
+Import using the submodule pattern (consistent with the rest of agf,
+e.g. `from agf.paths import resource_path`):
+
+```python
+from agf.window import ScrollingGameWindow
+```
+
+`agf/__init__.py` does not re-export classes at the top level.
+
 ---
 
 ## Terrain System
