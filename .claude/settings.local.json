@@ -20,7 +20,9 @@
       "Bash(git add *)",
       "Bash(git commit -m 'feat: add SoundManager for throttled sound playback *)",
       "Bash(git tag *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(python -m black src/agf/window.py src/agf/__init__.py)",
+      "Bash(python -m ruff check src/agf/window.py src/agf/__init__.py)"
     ]
   }
 }
