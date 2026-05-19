@@ -19,6 +19,33 @@ import arcade
 class PowerUpSprite(arcade.Sprite):
     """Falling power-up pickup sprite."""
 
+    _TEXTURE_REGISTRY: dict[str, str] = {}
+    _TEXTURE_CACHE: dict[str, arcade.Texture] = {}
+
+    @classmethod
+    def register(cls, effect_type: str, path: str) -> None:
+        """Register a texture path for an effect type.
+
+        Textures are loaded lazily on first sprite construction. Calling
+        register() again for the same effect_type overwrites the path.
+        """
+        cls._TEXTURE_REGISTRY[effect_type] = path
+
+    @classmethod
+    def _resolve_texture(cls, effect_type: str) -> Optional[arcade.Texture]:
+        """Return the texture for effect_type, loading on first use.
+
+        Returns None if effect_type is not registered.
+        """
+        path = cls._TEXTURE_REGISTRY.get(effect_type)
+        if path is None:
+            return None
+        texture = cls._TEXTURE_CACHE.get(path)
+        if texture is None:
+            texture = arcade.load_texture(path)
+            cls._TEXTURE_CACHE[path] = texture
+        return texture
+
     def __init__(
         self,
         x: float,
@@ -41,6 +68,8 @@ class PowerUpSprite(arcade.Sprite):
         spin_rpm    sprite rotation speed in RPM while falling.
                     10 RPM = one full rotation every 6 seconds.
         """
+        if texture is None:
+            texture = self._resolve_texture(effect_type)
         if texture is not None:
             super().__init__(path_or_texture=texture)
         else:
