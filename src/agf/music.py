@@ -13,7 +13,7 @@ _TRACKS: dict[str, str] = {
     "level_1": "assets/music/Juhani Junkala [Retro Game Music Pack] Level 1.ogg",
     "level_2": "assets/music/Juhani Junkala [Retro Game Music Pack] Level 2.ogg",
     "level_3": "assets/music/Juhani Junkala [Retro Game Music Pack] Level 3.ogg",
-    "level_4": "assets/music/awake10_megawall.mp3",
+    "level_4": "assets/music/awake10_megaWall.mp3",
     "level_5": "assets/music/Cyberpunk Moonlight Sonata.mp3",
     "level_6": "assets/music/fight.ogg",
 }
